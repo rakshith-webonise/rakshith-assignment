@@ -1,0 +1,279 @@
+<html>
+<head>
+
+<title>
+
+</title>
+
+<style>
+
+#topbox{
+	width: 100%;
+	height:200px;
+	border: 0px;
+	margin-top: 5px;
+	background-color: #35DAC3;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+
+}
+
+#input1{
+	
+	float:right;
+background-repeat:repeat-x;
+	border:1px solid #d1c7ac;
+	border-radius: 10px;
+	width: 230px;
+	color:#333333;
+	
+	font-family:tahoma, arial, sans-serif;
+}
+.text-style{
+	position: relative;
+
+background-repeat:repeat-x;
+	border:1px solid #d1c7ac;
+	border-radius: 6.5px;
+	width: 230px;
+	color:#333333;
+	
+	font-family:tahoma, arial, sans-serif;
+
+}
+
+#text_button{
+	height: 100px;
+	width:500px;
+	
+	background-repeat:repeat-x;
+	background-color: #FF8C42;
+	padding:15px;
+	margin-right:100px;
+	margin-bottom:50px;
+	margin-top: 50px;
+	margin-left: 550px;
+
+}
+
+#display_box_left{
+
+	width: 550px;
+	height:500px;
+	border: 0px;
+	margin-top: 5px;
+	background-color: #35DAC3;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	float:left;
+	
+	
+}
+#display_box_right{
+
+	width: 550px;
+
+	height:500px;
+	border: 0px;
+	margin-top: 5px;
+	background-color: #35DAC3;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	float:right;
+}
+#display_container_box{
+	margin:auto;
+	width:100%;
+	height:500px;
+}
+
+#display_box_history{
+
+	
+	width: 550px;
+
+	height:500px;
+	border: 0px;
+	margin-top: 25px;
+	background-color: #35DAC3;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+</style>
+
+
+
+</head>
+<body>
+
+	<script type="text/javascript">
+
+	
+	function add_to_history_localstorage(data){
+
+			<!--data is col element-->
+			var data_in_history=localStorage.getItem("history");
+			input_data=data.innerHTML +",";
+			if(data_in_history==null){
+				data_in_history="";
+				localStorage.setItem("history",input_data);
+			}
+
+			else{
+				var data_input=data_in_history+input_data;
+				localStorage.setItem('history',data_input);
+
+			}
+
+			
+
+	}
+
+	function insert_into_todolist(task_todo){
+		var task_tobedone=task_todo;
+		var table = document.getElementById("todolist");
+		var row=document.createElement('tr');
+		var col1=document.createElement('td');
+		var col2=document.createElement('td');
+		var col3=document.createElement('td');
+		col1.innerHTML=task_tobedone ;
+		col2.innerHTML='<input type="button" id="tick" onclick="add_to_completed(this)" value="mark as done"> </input>';
+		col3.innerHTML='<input type="button" id="cross" onclick="" value="remove"> </input>';
+		row.appendChild(col1);
+		row.appendChild(col2);
+		row.appendChild(col3);
+		table.appendChild(row);
+		add_to_history_localstorage(col1);
+	}
+
+
+function add_to_completed(smething){
+
+		var btn=smething.parentNode.parentNode.rowIndex;//row index
+		console.log(btn);
+		var col_data=(document.getElementById("todolist").rows[btn]).cells[0].innerHTML;
+		console.log(col_data);
+		insert_into_completed(col_data);
+
+	}
+
+	function insert_into_completed(data){
+
+		var table = document.getElementById("completedlist");
+		var row=document.createElement('tr');
+		var col1=document.createElement('td');
+		var col2=document.createElement('td');
+		col1.innerHTML=data ;
+		col2.innerHTML='<input type="button" id="tick" onclick="delete_row(this)" value="delete"> </input>';
+		row.appendChild(col1);
+		row.appendChild(col2);
+		table.appendChild(row);
+		//add_to_history_localstorage(col1);
+
+	}
+
+	function delete_row(row){
+
+		var btn=row.parentNode.parentNode.rowIndex
+		document.getElementById("completedlist").deleteRow(btn);
+		console.log("deleted item");
+
+	}
+
+	function add_to_todolist(){
+
+		var task_todo=document.getElementById("text_box").value;
+		insert_into_todolist(task_todo);
+
+	}
+
+	
+
+	function display_history(){
+		console.log("in function");
+		//check if active
+		if (document.getElementById("display_box_history").style.visibility=="hidden"){
+			console.log("in if");
+
+			document.getElementById("display_box_history").style.visibility="visible";
+		}
+
+		var data_in_history=localStorage.getItem("history");
+		if(data_in_history==null){
+			var table_history=document.getElementById("history_table");
+			var row=document.createElement('tr');
+			var col1=document.createElement('td');
+			col1.innerHTML="No Items in History to display";
+			row.appendChild(col1);
+			table_history.appendChild(row);
+		}
+
+		else{
+			var table_history=document.getElementById("history_table");
+			var array_his=data_in_history.split(",");
+			var length_his=array_his.length;
+			for(var i=0;i<length_his-1;i++){
+				var row=document.createElement('tr');
+				var col=document.createElement('td');
+				col.innerHTML=array_his[i];
+				row.appendChild(col);
+				table_history.appendChild(row);
+			}
+
+		}
+	}
+
+	
+	
+
+
+
+
+	</script>
+<div id="topbox">
+	<div id="text_button">
+
+		
+		
+		<input type="text" placeholder="What do you wish to do??" id="text_box"></input>
+
+		<input type="button" value="Add"  onclick="add_to_todolist()">
+		<input type="button" value="View History" onclick="display_history()">
+		
+	</div>
+
+
+</div>
+<div id="display_container_box">
+	<div id="display_box_left"><!-- todo list -->
+
+	 	<p align="center">Tasks Pending</p>
+	 	<table id="todolist"></table>
+
+	</div>	
+
+	<div id="display_box_right"><!-- completed list -->
+
+ 	<p align="center">You are DONE with these!!</p>
+ 	<table id="completedlist"></table>
+
+	</div>	
+
+</div>
+
+<div id="display_box_history">
+	<table id="history_table"></table>
+
+</div>
+
+</body>
+
+
+</html>
