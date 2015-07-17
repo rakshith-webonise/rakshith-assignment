@@ -9,7 +9,7 @@ use case:
 schema:
 
 User{
-	_id=ObjectID();
+	_id=ObjectId();
 	login_id:"<string>",
 	password:"<string>",
 	User_profile:{
@@ -27,20 +27,21 @@ User{
 
 
 Pages{
-_id=ObjectID();
+_id=ObjectId();
 title:"<string>",
 content:"<string>"
 slug:"<string>",
-modification_id:Object<MOdification>
+
 
 }
 
 
 Modification{
-	_id=ObjectID();
-	user_id:[{user_id:"<User>",time:"<timestamp>",title:"<String>"}],
-	comments:{text:"<text displayed>",user_id:"<user who writes comment>",time:<timestamp>}
-
+	_id=ObjectId();
+	page_id:<Page id of the modified page>
+	modification:[{user_id:"",date:""}]
+	comments:[{comment_id:<id for comment>,text:<comment text>,user_id:<user who commented>,time:<timestamp>}],
+	title:""
 }
 
 
@@ -49,3 +50,6 @@ Role{
 	role:"admin or super admin or user"
 
 }
+
+
+db.role.insert({user_id:"rakshith",role:})
